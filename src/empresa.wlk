@@ -20,7 +20,7 @@ class Empresa {
 	//method profesionalesCaros() { conjuntoProfesionales.any({prof=> prof.honorariosPorHora() > honorarioRef})} Echo por mi
 	
 	method profesionalesCaros() {
-		return profesionales.filter({prof=> prof.honorariosPorHora() > honorarioDeReferencia})
+		return profesionales.filter({p=> p.honorariosPorHora() > honorarioDeReferencia})
 	}
 	
 	/*

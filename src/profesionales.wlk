@@ -5,51 +5,64 @@ import universidades.*
 class Universidad{
 	var universidad
 	var honorarios
-	method pciaUniv() { return universidad}
-	method pciaUniv(univ) {universidad = univ}
-	method honorariosRecomendados () {return honorarios}
-	method honorariosRecomendados (honor) {honorarios = honor}
+	method setHonorariosSugeridos(_honorariosSugerido){
+		honorarios = _honorariosSugerido
+	}
+	method setProvincia(_provincias){
+		universidad = _provincias
+	}
+	method getProvincia() {return universidad}
+	method getHonorariosSugerido() {return honorarios}
+	
 }
 
-
-
-
-
-class ProfesionalAsociado {
-	var universidad
+class Profesional { //class que van a heredar todo lo de esta class con inherits
+	var universidad 
 	
 	method universidad() { return universidad }
 	method setUniversidad(univ) { universidad = univ }
-	method provinciasDondePuedeTrabajar() { return #{"Entre Ríos", "Corrientes", "Santa Fe"} }
-	method honorariosPorHora() { return 3000 }
+	
+	method provinciasDondePuedeTrabajar()
+	
+	method honorariosPorHora()
+	
+	method trabajasEn(_provincia){
+		return self.provinciasDondePuedeTrabajar().contains(_provincia)
+	}
+	
+	
 }
 
 
-// a esta clase le faltan métodos
-class ProfesionalVinculado {
-	var universidad
+class ProfesionalAsociado  inherits Profesional{
 	
-	method universidad() { return universidad }
-	method setUniversidad(univ) { universidad = univ }
-	method provinciasDondePuedeTrabajar() { 
+	override method provinciasDondePuedeTrabajar() {  //declarar que esta sobreescribiendo el metodo que le das, que este en la superclass
+		return #{"Entre Ríos", "Corrientes", "Santa Fe"}
+	}
+	
+	override method honorariosPorHora() { return 3000 }
+}
+
+
+class ProfesionalVinculado inherits Profesional {
+	
+	override method provinciasDondePuedeTrabajar() { 
 		return #{universidad.getProvincia()} 
 		
 		}
-/*	method provinciasDondePuedeTrabajar() { 
-		return #{self.pciaUniv()}
-pueden trabajar solamente en la provincia donde está la universidad,*/
-	method honorariosPorHora() { return universidades.honorariosRecomendados() } // los honorarios son los que recomienda la universidad.
+
+	override method honorariosPorHora() { return universidad.honorariosRecomendados() } // los honorarios son los que recomienda la universidad.
 	
 }                    
-// a esta clase le faltan atributos y métodos
-class ProfesionalLibre {
-	var universidad
+
+
+class ProfesionalLibre inherits Profesional{
+	
 	var honorarios
 	var provincias = #{}
 	
 	
-	method universidad() { return universidad }
-	method universidad(univ) { universidad = univ }
+	
 	method addProvincias(_provincia) {
 		provincias.addAll(_provincia)
 	}
@@ -64,10 +77,10 @@ class ProfesionalLibre {
 		provincias.remove(_provincia)
 	}
 	
-	method honorariosPorHora(){
+	override method honorariosPorHora(){
 		return honorarios
 	}
-	method provinciaDondePuedeTRabajar(){
+	override method provinciasDondePuedeTrabajar(){
 		return provincias
 	}
 	
